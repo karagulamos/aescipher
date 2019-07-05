@@ -20,12 +20,12 @@ type IPaddingStrategy interface {
 type NullPadding struct{}
 
 // Apply applies no padding
-func (pkcs *NullPadding) Apply(unpadded []byte, blockSize int) []byte {
+func (pkcs NullPadding) Apply(unpadded []byte, blockSize int) []byte {
 	return []byte{}
 }
 
 // Undo removes no padding
-func (pkcs *NullPadding) Undo(padded []byte) []byte {
+func (pkcs NullPadding) Undo(padded []byte) []byte {
 	return []byte{}
 }
 
@@ -50,8 +50,8 @@ func (pkcs PKCS5Padding) Undo(padded []byte) []byte {
 func GetPadding(option string) (IPaddingStrategy, error) {
 	switch option {
 	case PKCS5:
-		return &PKCS5Padding{}, nil
+		return PKCS5Padding{}, nil
 	}
 
-	return &NullPadding{}, errors.New("error: invalid padding option")
+	return NullPadding{}, errors.New("error: invalid padding option")
 }
