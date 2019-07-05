@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/karagulamos/aescipher/aescipher"
+	"github.com/karagulamos/aescipher"
 )
 
 var iv = `5OMTZPbytOmFlCAs`
