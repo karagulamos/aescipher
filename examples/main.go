@@ -1,4 +1,4 @@
-package aescipher
+package examples
 
 import (
 	"fmt"
