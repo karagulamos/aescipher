@@ -1,10 +1,10 @@
-package main
+package aescipher
 
 import (
 	"fmt"
 	"log"
 
-	"./aescipher"
+	"github.com/karagulamos/aescipher/aescipher"
 )
 
 var iv = `5OMTZPbytOmFlCAs`
