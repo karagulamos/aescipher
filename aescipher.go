@@ -7,6 +7,11 @@ import (
 	"errors"
 )
 
+const (
+	errorInvalidPadding     = "error: invalid padding"
+	errorCipherTextTooShort = "error: cipher text too short"
+)
+
 // AesCipher provides functionalities to encrypt text using AES
 type AesCipher struct {
 	iv      []byte
@@ -31,18 +36,23 @@ func (ac *AesCipher) Encrypt(plainText string) (string, error) {
 		return "", err
 	}
 
-	paddedBytes := ac.padding.Apply([]byte(plainText), aes.BlockSize)
+	padded := ac.padding.Apply([]byte(plainText), aes.BlockSize)
 
-	ciphertext := make([]byte, len(paddedBytes))
+	if len(padded) == 0 {
+		return "", errors.New(errorInvalidPadding)
+	}
+
+	ciphertext := make([]byte, len(padded))
+
 	mode := cipher.NewCBCEncrypter(block, ac.iv)
-	mode.CryptBlocks(ciphertext, paddedBytes)
+	mode.CryptBlocks(ciphertext, padded)
 
 	return hex.EncodeToString(ciphertext), nil
 }
 
 // Decrypt decrypts a text using AES
 func (ac *AesCipher) Decrypt(encryptedText string) (string, error) {
-	decodedText, _ := hex.DecodeString(encryptedText)
+	decoded, _ := hex.DecodeString(encryptedText)
 
 	block, err := aes.NewCipher(ac.key)
 
@@ -50,14 +60,20 @@ func (ac *AesCipher) Decrypt(encryptedText string) (string, error) {
 		return "", err
 	}
 
-	if len(decodedText) < aes.BlockSize {
-		return "", errors.New("error: cipher text too short")
+	if len(decoded) < aes.BlockSize {
+		return "", errors.New(errorCipherTextTooShort)
 	}
 
-	decrypted := make([]byte, len(decodedText))
+	decrypted := make([]byte, len(decoded))
 
 	mode := cipher.NewCBCDecrypter(block, ac.iv)
-	mode.CryptBlocks(decrypted, decodedText)
+	mode.CryptBlocks(decrypted, decoded)
 
-	return string(ac.padding.Undo(decrypted)), nil
+	unpadded := ac.padding.Undo(decrypted)
+
+	if len(unpadded) == 0 {
+		return "", errors.New(errorInvalidPadding)
+	}
+
+	return string(unpadded), nil
 }

@@ -14,6 +14,18 @@ func TestEncryptReturnsErrorGivenInvalidKeyAndIV(t *testing.T) {
 	}
 }
 
+// TestEncryptReturnsErrorGivenInvalidPaddingOption ...
+func TestEncryptReturnsErrorGivenInvalidPaddingOption(t *testing.T) {
+	padding, _ := GetPadding("")
+	aescipher := New("0123456789ABCDEF", "0123456789ABCDEF", padding)
+
+	_, err := aescipher.Encrypt("1")
+
+	if err == nil {
+		t.Fail()
+	}
+}
+
 // TestEncryptReturnsValidEncryptedText ...
 func TestEncryptReturnsValidEncryptedText(t *testing.T) {
 	padding, _ := GetPadding(PKCS5)
@@ -47,6 +59,18 @@ func TestDecryptReturnsErrorGivenInvalidCipherTextLength(t *testing.T) {
 	wrong := correct[0 : len(correct)-2]
 
 	_, err := aescipher.Decrypt(wrong)
+
+	if err == nil {
+		t.Fail()
+	}
+}
+
+// TestDecryptReturnsErrorGivenInvalidPaddingOption ...
+func TestDecryptReturnsErrorGivenInvalidPaddingOption(t *testing.T) {
+	padding, _ := GetPadding("")
+	aescipher := New("0123456789ABCDEF", "0123456789ABCDEF", padding)
+
+	_, err := aescipher.Decrypt("3389acc0972916a993a62ad749d9db18")
 
 	if err == nil {
 		t.Fail()
