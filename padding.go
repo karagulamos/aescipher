@@ -39,7 +39,7 @@ func (pkcs PKCS5Padding) Apply(unpadded []byte, blockSize int) []byte {
 	return append(unpadded, padtext...)
 }
 
-// Undo removes PKC5 padding
+// Undo removes PKCS5 padding
 func (pkcs PKCS5Padding) Undo(padded []byte) []byte {
 	length := len(padded)
 	unpadding := int(padded[length-1])
