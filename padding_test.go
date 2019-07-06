@@ -27,10 +27,11 @@ func TestApplyReturnsEmptySliceGivenInvalidPaddingOption(t *testing.T) {
 // TestApplyReturnsCorrectPaddingLength ...
 func TestApplyReturnsCorrectPaddingLength(t *testing.T) {
 	padding, _ := GetPadding(PKCS5)
+	expectedLength := 11
 
-	result := padding.Apply([]byte("12345"), 11)
+	padded := padding.Apply([]byte("12345"), expectedLength)
 
-	if len(result) != 11 {
+	if len(padded) != expectedLength {
 		t.Fail()
 	}
 }
