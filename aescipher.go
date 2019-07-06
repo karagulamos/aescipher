@@ -51,7 +51,7 @@ func (ac *AesCipher) Decrypt(encryptedText string) (string, error) {
 	}
 
 	if len(decodedText) < aes.BlockSize {
-		return "", errors.New("cipher text too short")
+		return "", errors.New("error: cipher text too short")
 	}
 
 	decrypted := make([]byte, len(decodedText))

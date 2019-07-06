@@ -16,7 +16,7 @@ type IPaddingStrategy interface {
 	Undo(padded []byte) []byte
 }
 
-// NullPadding default padding strategy when no padding option is provide to the factory
+// NullPadding default padding strategy when no valid option is passed to the factory method
 type NullPadding struct{}
 
 // Apply applies no padding
@@ -29,7 +29,7 @@ func (pkcs NullPadding) Undo(padded []byte) []byte {
 	return []byte{}
 }
 
-// PKCS5Padding padding strategy for AES ciphers
+// PKCS5Padding PCKS5 padding strategy for AES
 type PKCS5Padding struct{}
 
 // Apply applies PKCS5 padding
@@ -46,7 +46,7 @@ func (pkcs PKCS5Padding) Undo(padded []byte) []byte {
 	return padded[:(length - unpadding)]
 }
 
-// GetPadding gets the provided padding strategy
+// GetPadding factory method of padding strategies
 func GetPadding(option string) (IPaddingStrategy, error) {
 	switch option {
 	case PKCS5:
