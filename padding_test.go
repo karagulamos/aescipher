@@ -4,8 +4,8 @@ import (
 	"testing"
 )
 
-// TestGetPaddingReturnsErrorWhenPaddingOptionIsInvalid ...
-func TestGetPaddingReturnsErrorWhenPaddingOptionIsInvalid(t *testing.T) {
+// TestGetPaddingReturnsErrorGivenInvalidPaddingOption ...
+func TestGetPaddingReturnsErrorGivenInvalidPaddingOption(t *testing.T) {
 	_, err := GetPadding("")
 
 	if err == nil {
@@ -13,8 +13,8 @@ func TestGetPaddingReturnsErrorWhenPaddingOptionIsInvalid(t *testing.T) {
 	}
 }
 
-// TestApplyReturnsEmptySliceWhenPaddingOptionIsInvalid ...
-func TestApplyReturnsEmptySliceWhenPaddingOptionIsInvalid(t *testing.T) {
+// TestApplyReturnsEmptySliceGivenInvalidPaddingOption ...
+func TestApplyReturnsEmptySliceGivenInvalidPaddingOption(t *testing.T) {
 	padding, _ := GetPadding("")
 
 	result := padding.Apply([]byte("123456789ABCDEF"), 16)
@@ -35,8 +35,8 @@ func TestApplyReturnsCorrectPaddingLength(t *testing.T) {
 	}
 }
 
-// TestUndoReturnsEmptySliceWhenPaddingOptionIsInvalid ...
-func TestUndoReturnsEmptySliceWhenPaddingOptionIsInvalid(t *testing.T) {
+// TestUndoReturnsEmptySliceGivenInvalidPaddingOption ...
+func TestUndoReturnsEmptySliceGivenInvalidPaddingOption(t *testing.T) {
 	padding, _ := GetPadding("")
 	original := []byte("12345")
 
