@@ -22,12 +22,13 @@ type AesCipher struct {
 }
 
 // New constructs a new instance of AesCipher
-func New(iv, key string, padding padding.IPaddingStrategy) *AesCipher {
-	return &AesCipher{
-		[]byte(iv),
-		[]byte(key),
-		padding,
+func New(iv, key string, paddingStrategy ...padding.IPaddingStrategy) *AesCipher {
+	if len(paddingStrategy) == 0 {
+		padding, _ := padding.GetPadding(padding.PKCS7)
+		return &AesCipher{[]byte(iv), []byte(key), padding}
 	}
+
+	return &AesCipher{[]byte(iv), []byte(key), paddingStrategy[0]}
 }
 
 // Encrypt encrypts a text using AES

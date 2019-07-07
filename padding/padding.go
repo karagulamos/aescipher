@@ -8,6 +8,9 @@ import (
 const (
 	// PKCS7 padding option
 	PKCS7 string = "PKCS7"
+
+	// PKCS5 padding optiion
+	PKCS5 string = "PKCS5"
 )
 
 // IPaddingStrategy provides a common base for different AES padding strategies
@@ -49,7 +52,7 @@ func (pkcs PKCS7Padding) Undo(padded []byte) []byte {
 // GetPadding factory method of padding strategies
 func GetPadding(option string) (IPaddingStrategy, error) {
 	switch option {
-	case PKCS7:
+	case PKCS5, PKCS7:
 		return PKCS7Padding{}, nil
 	}
 
