@@ -5,6 +5,8 @@ import (
 	"crypto/cipher"
 	"encoding/hex"
 	"errors"
+
+	"github.com/karagulamos/aescipher/padding"
 )
 
 const (
@@ -16,11 +18,11 @@ const (
 type AesCipher struct {
 	iv      []byte
 	key     []byte
-	padding IPaddingStrategy
+	padding padding.IPaddingStrategy
 }
 
 // New constructs a new instance of AesCipher
-func New(iv, key string, padding IPaddingStrategy) *AesCipher {
+func New(iv, key string, padding padding.IPaddingStrategy) *AesCipher {
 	return &AesCipher{
 		[]byte(iv),
 		[]byte(key),

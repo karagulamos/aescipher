@@ -1,4 +1,4 @@
-package aescipher
+package padding
 
 import (
 	"testing"
@@ -26,7 +26,7 @@ func TestApplyReturnsEmptySliceGivenInvalidPaddingOption(t *testing.T) {
 
 // TestApplyReturnsCorrectPaddingLength ...
 func TestApplyReturnsCorrectPaddingLength(t *testing.T) {
-	padding, _ := GetPadding(PKCS5)
+	padding, _ := GetPadding(PKCS7)
 	expectedLength := 11
 
 	padded := padding.Apply([]byte("12345"), expectedLength)
@@ -51,7 +51,7 @@ func TestUndoReturnsEmptySliceGivenInvalidPaddingOption(t *testing.T) {
 
 // TestUndoReturnsCorrectUnpaddedLength ...
 func TestUndoReturnsCorrectUnpaddedLength(t *testing.T) {
-	padding, _ := GetPadding(PKCS5)
+	padding, _ := GetPadding(PKCS7)
 	original := []byte("12345")
 
 	padded := padding.Apply(original, 11)

@@ -5,13 +5,14 @@ import (
 	"log"
 
 	"github.com/karagulamos/aescipher"
+	"github.com/karagulamos/aescipher/padding"
 )
 
 var iv = `5OMTZPbytOmFlCAs`
 var key = `6gTISUYvekDcgDwO`
 
 func main() {
-	padding, err := aescipher.GetPadding(aescipher.PKCS5)
+	padding, err := padding.GetPadding(padding.PKCS7)
 
 	if err != nil {
 		log.Fatal(err)

@@ -1,10 +1,14 @@
 package aescipher
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/karagulamos/aescipher/padding"
+)
 
 // TestEncryptReturnsErrorGivenInvalidKeyAndIV ...
 func TestEncryptReturnsErrorGivenInvalidKeyAndIV(t *testing.T) {
-	padding, _ := GetPadding(PKCS5)
+	padding, _ := padding.GetPadding(padding.PKCS7)
 	aescipher := New("", "", padding)
 
 	_, err := aescipher.Encrypt("text to encrypt")
@@ -16,7 +20,7 @@ func TestEncryptReturnsErrorGivenInvalidKeyAndIV(t *testing.T) {
 
 // TestEncryptReturnsErrorGivenInvalidPaddingOption ...
 func TestEncryptReturnsErrorGivenInvalidPaddingOption(t *testing.T) {
-	padding, _ := GetPadding("")
+	padding, _ := padding.GetPadding("")
 	aescipher := New("0123456789ABCDEF", "0123456789ABCDEF", padding)
 
 	_, err := aescipher.Encrypt("1")
@@ -28,7 +32,7 @@ func TestEncryptReturnsErrorGivenInvalidPaddingOption(t *testing.T) {
 
 // TestEncryptReturnsValidEncryptedText ...
 func TestEncryptReturnsValidEncryptedText(t *testing.T) {
-	padding, _ := GetPadding(PKCS5)
+	padding, _ := padding.GetPadding(padding.PKCS7)
 	aescipher := New("0123456789ABCDEF", "0123456789ABCDEF", padding)
 
 	encrypted, _ := aescipher.Encrypt("1")
@@ -40,7 +44,7 @@ func TestEncryptReturnsValidEncryptedText(t *testing.T) {
 
 // TestDecryptReturnsErrorGivenInvalidKeyAndIV ...
 func TestDecryptReturnsErrorGivenInvalidKeyAndIV(t *testing.T) {
-	padding, _ := GetPadding(PKCS5)
+	padding, _ := padding.GetPadding(padding.PKCS7)
 	aescipher := New("", "", padding)
 
 	_, err := aescipher.Decrypt("3389acc0972916a993a62ad749d9db18")
@@ -52,7 +56,7 @@ func TestDecryptReturnsErrorGivenInvalidKeyAndIV(t *testing.T) {
 
 // TestDecryptReturnsErrorGivenInvalidCipherTextLength ...
 func TestDecryptReturnsErrorGivenInvalidCipherTextLength(t *testing.T) {
-	padding, _ := GetPadding(PKCS5)
+	padding, _ := padding.GetPadding(padding.PKCS7)
 	aescipher := New("0123456789ABCDEF", "0123456789ABCDEF", padding)
 
 	correct := "3389acc0972916a993a62ad749d9db18"
@@ -67,7 +71,7 @@ func TestDecryptReturnsErrorGivenInvalidCipherTextLength(t *testing.T) {
 
 // TestDecryptReturnsErrorGivenInvalidPaddingOption ...
 func TestDecryptReturnsErrorGivenInvalidPaddingOption(t *testing.T) {
-	padding, _ := GetPadding("")
+	padding, _ := padding.GetPadding("")
 	aescipher := New("0123456789ABCDEF", "0123456789ABCDEF", padding)
 
 	_, err := aescipher.Decrypt("3389acc0972916a993a62ad749d9db18")
@@ -79,7 +83,7 @@ func TestDecryptReturnsErrorGivenInvalidPaddingOption(t *testing.T) {
 
 // TestDecryptReturnsValidDecryptedText ...
 func TestDecryptReturnsValidDecryptedText(t *testing.T) {
-	padding, _ := GetPadding(PKCS5)
+	padding, _ := padding.GetPadding(padding.PKCS7)
 	aescipher := New("0123456789ABCDEF", "0123456789ABCDEF", padding)
 
 	decrypted, _ := aescipher.Decrypt("3389acc0972916a993a62ad749d9db18")
