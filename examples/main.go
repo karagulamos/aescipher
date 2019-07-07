@@ -14,8 +14,7 @@ func main() {
 	padding, err := aescipher.GetPadding(aescipher.PKCS5)
 
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+		log.Fatal(err)
 	}
 
 	aescipher := aescipher.New(iv, key, padding)
