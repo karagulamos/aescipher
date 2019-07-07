@@ -56,9 +56,9 @@ func TestDecryptReturnsErrorGivenInvalidCipherTextLength(t *testing.T) {
 	aescipher := New("0123456789ABCDEF", "0123456789ABCDEF", padding)
 
 	correct := "3389acc0972916a993a62ad749d9db18"
-	wrong := correct[0 : len(correct)-2]
+	invalid := correct[0 : len(correct)-2]
 
-	_, err := aescipher.Decrypt(wrong)
+	_, err := aescipher.Decrypt(invalid)
 
 	if err == nil {
 		t.Fail()
